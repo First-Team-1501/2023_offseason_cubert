@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -23,7 +22,6 @@ import frc.robot.Climber.Climber;
 import frc.robot.Climber.Command.*;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.auto.Autos;
-import frc.robot.commands.swervedrive.auto.TestComplexAutoCommand;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteDrive;
 import frc.robot.commands.swervedrive.drivebase.AbsoluteFieldDrive;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
@@ -40,7 +38,6 @@ public class RobotContainer
   private final Intake s_Intake;
   private final Shooter s_Shooter;
   private final Climber s_Climber;
-  private PowerDistribution powerBoard;
 
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
@@ -56,13 +53,12 @@ public class RobotContainer
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer(PowerDistribution pd)
+  public RobotContainer()
   {
 
     s_Intake = new Intake();
     s_Climber = new Climber();
     s_Shooter = new Shooter();
-    powerBoard = pd;
 
     // Configure the trigger bindings
     configureBindings();

@@ -41,7 +41,6 @@ public class Robot extends TimedRobot
     return instance;
   }
 
-  private PowerDistribution pd;
 
   /**
    * This function is run when the robot is first started up and should be used for any initialization code.
@@ -52,8 +51,7 @@ public class Robot extends TimedRobot
     PathPlannerServer.startServer(5811);
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
-    pd = new PowerDistribution(20, ModuleType.kRev);
-    m_robotContainer = new RobotContainer(pd);
+    m_robotContainer = new RobotContainer();
 
     // Create a timer to disable motor brake a few seconds after disable.  This will let the robot stop
     // immediately when disabled, but then also let it be pushed more 
