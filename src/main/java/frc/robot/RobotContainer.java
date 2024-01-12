@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Arm.Arm;
-import frc.robot.Arm.Intake;
-import frc.robot.Arm.NamedPose;
-import frc.robot.Arm.command.ArmCommand;
-import frc.robot.Arm.command.IntakeCommand;
-import frc.robot.Arm.command.ShootCommand;
+import frc.robot.Intake.Intake;
+import frc.robot.Intake.Command.*;
+import frc.robot.Shooter.Shooter;
+import frc.robot.Shooter.Command.*;
+import frc.robot.Climber.Climber;
+import frc.robot.Climber.Command.*;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.auto.Autos;
 import frc.robot.commands.swervedrive.auto.TestComplexAutoCommand;
@@ -37,9 +37,9 @@ import java.io.File;
  */
 public class RobotContainer
 {
-
-  private final Arm s_Arm;
   private final Intake s_Intake;
+  private final Shooter s_Shooter;
+  private final Climber s_Climber;
   private PowerDistribution powerBoard;
 
   // The robot's subsystems and commands are defined here...
@@ -59,8 +59,9 @@ public class RobotContainer
   public RobotContainer(PowerDistribution pd)
   {
 
-    s_Arm = new Arm(NamedPose.Home);
     s_Intake = new Intake();
+    s_Climber = new Climber();
+    s_Shooter = new Shooter();
     powerBoard = pd;
 
     // Configure the trigger bindings
@@ -105,20 +106,21 @@ public class RobotContainer
 
     //Xbox controlls for arm and intake
 
-    Trigger homePos = new Trigger(() -> operatorXbox.getRawButton(7));
-        homePos.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule(NamedPose.Home, s_Arm,powerBoard)));
 
-    Trigger floorPos = new Trigger(() -> operatorXbox.getRawButton(8));
-        floorPos.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule(NamedPose.FloorPick, s_Arm,powerBoard)));
-
-    Trigger shootPos = new Trigger(() -> operatorXbox.getRawButton(1));
-        shootPos.onTrue(new InstantCommand(()->ArmCommand.PlotPathAndSchedule(NamedPose.Shoot, s_Arm,powerBoard)));
-
-    Trigger intakeButton = new Trigger(()-> operatorXbox.getRawButton(2));
+    Trigger intakeButton = new Trigger(()-> operatorXbox.getRawButton(6));
         intakeButton.whileTrue(new IntakeCommand(s_Intake));
 
-    Trigger shootButton = new Trigger(()->operatorXbox.getRawButton(3));
-        shootButton.whileTrue(new ShootCommand(s_Intake));
+    Trigger outakeButton = new Trigger(()->operatorXbox.getRawButton(5));
+        outakeButton.whileTrue(new OutakeCommand(s_Intake));
+
+    Trigger climbButton = new Trigger(()-> operatorXbox.getRawButton(4));
+        climbButton.whileTrue(new ClimbUpCommand(s_Climber));
+
+    Trigger rapelButton = new Trigger(()->operatorXbox.getRawButton(1));
+        rapelButton.whileTrue(new ClimbDownCommand(s_Climber));
+
+    Trigger shootButton = new Trigger(()->operatorXbox.getRawButton(5));
+        shootButton.whileTrue(new ShootCommand(s_Shooter));
 
   }
 
@@ -130,8 +132,8 @@ public class RobotContainer
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    //return Autos.exampleAuto(drivebase, s_Intake);
-    return new TestComplexAutoCommand(drivebase, s_Intake);
+    return Autos.exampleAuto(drivebase);
+ 
   }
 
   public void setDriveMode()

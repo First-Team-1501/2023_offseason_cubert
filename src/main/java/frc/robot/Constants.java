@@ -50,15 +50,21 @@ public final class Constants
     public static final double LEFT_Y_DEADBAND = 0.01;
   }
 
-  public static final class Arm
+  public static final class Intake
     {
-        public static final int armMasterMoter = 9;
-        public static final int armSlaveMotor = 16;
+        public static final int intakeMasterMoter = 15;
+        public static final int intakeSlaveMotor = 16;
         
     }
 
     public static final class Shooter
     {
-        public static final int shooterMotorID = 15;
+        public static final int shooterMasterMotor = 17;
+        public static final int shooterSlaveMotor = 18;
+    }
+
+    public static final class Climber
+    {
+      public static final int climberMotor = 9;
     }
 }

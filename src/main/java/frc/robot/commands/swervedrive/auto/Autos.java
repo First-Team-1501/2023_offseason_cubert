@@ -21,8 +21,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Arm.Intake;
-import frc.robot.Arm.command.ShootCommand;
 import frc.robot.Constants.Auton;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public final class Autos
   /**
    * Example static factory for an autonomous command.
    */
-  public static CommandBase exampleAuto(SwerveSubsystem swerve, Intake intake)
+  public static CommandBase exampleAuto(SwerveSubsystem swerve)
   {
     boolean               onTheFly = true; // Use the path defined in code or loaded from PathPlanner.
     PathPlannerTrajectory example;
@@ -58,7 +56,6 @@ public final class Autos
     if (onTheFly)
     {
       //Shoot cube then wait 1.5 seconds
-      new ShootCommand(intake).raceWith(new WaitCommand(1.5));
 
       // Move 4 meters, then spin 180 degrees while moving another 0.8 meters.
       example = PathPlanner.generatePath(

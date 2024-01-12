@@ -23,18 +23,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Arm.Intake;
-import frc.robot.Arm.command.ShootCommand;
 import frc.robot.Constants.Auton;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import java.util.HashMap;
 import java.util.List;
 
 public class TestComplexAutoCommand extends SequentialCommandGroup {
-    public TestComplexAutoCommand(SwerveSubsystem swerve, Intake intake) {
+    public TestComplexAutoCommand(SwerveSubsystem swerve) {
         // add the subsystems to the requirements of the command
         // the scheduler will prevent two commands that require the same subsystem from being scheduled simultaneously
-        addRequirements(swerve, intake);
+        
 
         // move 4 meters, then spin 180 degrees while moving another 0.8 meters.
         PathPlannerTrajectory pathTrajectory = PathPlanner.generatePath(
@@ -50,7 +48,7 @@ public class TestComplexAutoCommand extends SequentialCommandGroup {
         // add the commands, in order
         addCommands(
             // shoot cube, then wait 1.5 seconds
-            new ShootCommand(intake).raceWith(new WaitCommand(1.5)),
+            
 
             // command to follow the trajectory
             new PPSwerveControllerCommand(
